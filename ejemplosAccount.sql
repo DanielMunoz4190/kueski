@@ -1,0 +1,1 @@
+INSERT INTO Account (employe_id, password, user_name, job_area, number_emergency_contact, relation_emergency_contact, email, phone_number, location) VALUES (104, 'nuevaclave', 'JuanPerez', 'Ventas', 987654321, 1, 'juan.perez@example.com', 123456789, 'Ciudad de México')
