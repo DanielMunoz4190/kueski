@@ -3,7 +3,7 @@ import { methods as accountController } from '../controllers/account.controller'
 
 const router = Router();
 
-router.get('/', accountController.loginAccount);
+router.get('/login', accountController.loginAccount);
 router.get('/getAccounts', accountController.getAccounts);
 router.get('/getAccount/:id', accountController.getAccount);
 router.get('/getAccountByUserName/:user_name', accountController.getAccountByUserName);
