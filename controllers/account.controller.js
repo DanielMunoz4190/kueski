@@ -9,12 +9,14 @@ const loginAccount = async(req, res) => {
         }
         const connection = await getConnection();
         const result = await connection.query("SELECT * FROM Account WHERE user_name = ? AND password = ?", [user_name, password]);
-        //if(result.length == 0){
-           // res.status(400);
-          //  res.send("Invalid user name or password");
-        //}
-
-        res.json(result);
+        if(result.length == 0){
+            res.status(400);
+            res.send(false);
+        }
+        else{
+            res.send(true);
+            res.status(200);
+        }
     }
     catch(e){
         res.status(500);
@@ -72,8 +74,6 @@ const getAccountByPhoneNumber = async(req, res) => {
         res.send(e.message);
     }
 };
-
-
 
 const registerAccount = async(req, res) => {
     try{

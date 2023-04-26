@@ -1,19 +1,28 @@
 import { getConnection } from "./../database/database";
 
 
-const getClients =  async(req, res) => {
-    try{
-        const connection = await getConnection();
-        
-        const result = await connection.query("SELECT * FROM Client");
-        
-        res.json(result);
+const getClients = async (req, res) => {
+    try {
+      const connection = await getConnection();
+      const contador = await connection.query("SELECT COUNT(*) FROM Client");
+      const result = await connection.query("SELECT * FROM Client");
+  
+      // Verificar que contador tiene un resultado válido
+      if (contador && contador[0] && contador[0]['count(*)'] !== undefined) {
+        const data = {
+          count: contador[0]['count(*)'],
+          results: result
+        };
+  
+        res.json(data);
+      } else {
+        throw new Error('Error al obtener el contador de clientes.');
+      }
+    } catch (e) {
+      res.status(500);
+      res.send(e.message);
     }
-    catch(e){
-        res.status(500);
-        res.send(e.message);
-    }
-}
+  };
 
 const getClient = async(req, res) => {
     try{
