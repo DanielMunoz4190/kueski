@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
+import cors from 'cors';
 
 //routes
 import accountRoutes from './routes/account.routes';
@@ -12,6 +13,14 @@ import solicitudesRoutes from './routes/solicitudes.routes';
 
 const app = express();
 
+
+
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*'); // Permite solicitudes desde http://localhost:3000
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE'); // Permite los métodos HTTP permitidos
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Permite las cabeceras permitidas
+    next();
+  });
 //settings
 app.set('port', process.env.PORT || 4000);
 

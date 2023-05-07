@@ -98,42 +98,57 @@ const registerClient = async(req, res) => {
     }  
 }
 
-const updateClient = async(req, res) => {
-    try{
-        const{ id } = req.params;
-        const { password, client_name, first_last_name, second_last_name, born_date, nationality, state_of_birth, economic_activity, curp, gender, phone_number, email, client_data_other, is_client, is_blocked, location} = req.body;
-        if(!client_name || !born_date || curp){
-            res.status(400);
-            res.send("Missing essential parameters");
-            return;
-        }
-        const newClient = {
-            password,
-            client_name,
-            first_last_name,
-            second_last_name,
-            born_date,
-            nationality,
-            state_of_birth,
-            economic_activity,
-            curp, 
-            gender,
-            phone_number,
-            email,
-            client_data_other,
-            is_client,
-            is_blocked
-        };
-        const connection = await getConnection();
-        const result = await connection.query("UPDATE Client SET ? WHERE client_id = ?", [newClient, id]);
-        res.json({message: "Client Updated"});
+const updateClient = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const connection = await getConnection();
+  
+      const query = "UPDATE Client SET " +
+                    "password = ?, " +
+                    "client_name = ?, " +
+                    "first_last_name = ?, " +
+                    "second_last_name = ?, " +
+                    "born_date = ?, " +
+                    "nationality = ?, " +
+                    "state_of_birth = ?, " +
+                    "economic_activity = ?, " +
+                    "curp = ?, " +
+                    "gender = ?, " +
+                    "phone_number = ?, " +
+                    "email = ?, " +
+                    "client_data_other = ?, " +
+                    "is_client = ?, " +
+                    "is_blocked = ? " +
+                    "WHERE client_id = ?";
+      
+      const values = [
+        req.body.password,
+        req.body.client_name,
+        req.body.first_last_name,
+        req.body.second_last_name,
+        req.body.born_date,
+        req.body.nationality,
+        req.body.state_of_birth,
+        req.body.economic_activity,
+        req.body.curp,
+        req.body.gender,
+        req.body.phone_number,
+        req.body.email,
+        req.body.client_data_other,
+        req.body.is_client,
+        req.body.is_blocked,
+        id
+      ];
+  
+      const result = await connection.query(query, values);
+  
+      res.json({ message: "Client updated" });
+    } catch (e) {
+      res.status(501);
+      res.send(e.message);
     }
-    catch(e){
-        res.status(500);
-        res.send(e.message);
-    }
-};
-
+  };
+  
 const deleteClient = async(req, res) => {
     try{
         const { id } = req.params;

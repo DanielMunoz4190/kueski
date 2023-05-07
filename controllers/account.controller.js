@@ -77,7 +77,7 @@ const getAccountByPhoneNumber = async(req, res) => {
 
 const registerAccount = async(req, res) => {
     try{
-        const { password, user_name, job_area, number_emergency_contact, relation_emergency_contact, phone_number, email, location} = req.body;
+        const { password, user_name, job_area, number_emergency_contact, relation_emergency_contact, phone_number, email, location, image_url} = req.body;
         if(!password || !user_name || !job_area || !number_emergency_contact || !relation_emergency_contact || !phone_number || !email || !location){
             res.status(400);
             res.send("Bad Request");
@@ -91,7 +91,8 @@ const registerAccount = async(req, res) => {
             relation_emergency_contact,
             phone_number,
             email, 
-            location
+            location,
+            image_url
         };
         const connection = await getConnection();
         const result = await connection.query("INSERT INTO Account SET ?", [newAccount]);
@@ -106,7 +107,7 @@ const registerAccount = async(req, res) => {
 const updateAccount = async(req, res) => {
     try{
         const { id } = req.params;
-        const { password, user_name, job_area, number_emergency_contact, relation_emergency_contact, phone_number, email, location} = req.body;
+        const { password, user_name, job_area, number_emergency_contact, relation_emergency_contact, phone_number, email, location, image_url} = req.body;
         if(!password || !user_name || !job_area || !number_emergency_contact || !relation_emergency_contact || !phone_number || !email || !location){
             res.status(400);
             res.send("Bad Request");
@@ -120,7 +121,8 @@ const updateAccount = async(req, res) => {
             relation_emergency_contact,
             phone_number,
             email,
-            location
+            location,
+            image_url
         };
         const connection = await getConnection();
         const result = await connection.query("UPDATE Account SET ? WHERE employe_id = ?", [newAccount, id]);

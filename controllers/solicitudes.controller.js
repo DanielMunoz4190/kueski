@@ -3,7 +3,7 @@ import { getConnection } from "./../database/database";
 const getSolicitudes =  async(req, res) => {
     try{
         const connection = await getConnection();
-        const result = await connection.query("SELECT * FROM Solicitud");
+        const result = await connection.query("SELECT * FROM Solicitudes");
         res.json(result);
     }
     catch(e){
@@ -16,7 +16,7 @@ const getSolicitud = async(req, res) => {
     try{
         const { id } = req.params;
         const connection = await getConnection();
-        const result = await connection.query("SELECT * FROM Solicitud WHERE solicitud_id = ?", [id]);
+        const result = await connection.query("SELECT * FROM Solicitudes WHERE solicitud_id = ?", [id]);
         res.json(result);
     }
     catch(e){
@@ -52,7 +52,7 @@ const registerSolicitud = async(req, res) => {
             comment
         };
         const connection = await getConnection();
-        const result = await connection.query("INSERT INTO Solicitud SET ?", [newSolicitud]);
+        const result = await connection.query("INSERT INTO Solicitudes SET ?", [newSolicitud]);
         res.json(result);
     }
     catch(e){
@@ -76,7 +76,7 @@ const updateSolicitud = async(req, res) => {
             comment
         };
         const connection = await getConnection();
-        const result = await connection.query("UPDATE Solicitud SET ? WHERE solicitud_id = ?", [updatedSolicitud, id]);
+        const result = await connection.query("UPDATE Solicitudes SET ? WHERE solicitud_id = ?", [updatedSolicitud, id]);
         res.json(result);
     }
     catch(e){
@@ -89,7 +89,7 @@ const deleteSolicitud = async(req, res) => {
     try{
         const { id } = req.params;
         const connection = await getConnection();
-        const result = await connection.query("DELETE FROM Solicitud WHERE solicitud_id = ?", [id]);
+        const result = await connection.query("DELETE FROM Solicitudes WHERE solicitud_id = ?", [id]);
         res.json(result);
     }
     catch(e){
